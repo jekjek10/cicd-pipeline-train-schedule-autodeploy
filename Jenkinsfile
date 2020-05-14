@@ -54,7 +54,6 @@ pipeline {
                 )
             }
         }
-        
         stage('SmokeTest') {
             when {
                 branch 'master'
@@ -71,20 +70,13 @@ pipeline {
                     }
                 }
             }
-        }       
-        
+        }
         stage('DeployToProduction') {
             when {
                 branch 'master'
             }
-
             steps {
                 milestone(1)
-                kubernetesDeploy(
-                    kubeconfigId: 'kubeconfig',
-                    configs: 'train-schedule-kube-canary.yml',
-                    enableConfigSubstitution: true
-                )
                 kubernetesDeploy(
                     kubeconfigId: 'kubeconfig',
                     configs: 'train-schedule-kube.yml',
